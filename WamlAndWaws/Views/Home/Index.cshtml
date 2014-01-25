@@ -1,0 +1,62 @@
+﻿@model WamlAndWaws.Models.HomePageViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Web Sites and WAML</h1>
+    <p class="lead">This is a web site that makes other web sites. Thanks to Angela for the repro and inspiration.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>New Site</h2>
+        <form action="/Home/NewSite" method="post">
+            <p>
+                <input type="text" name="SiteName" value="yournewsite" />.azurewebsites.net
+            </p>
+            <p>
+                <select name="WebSpaceName">
+                    @{
+                        foreach (var webSpace in Model.WebSpaces)
+                        {
+                            <option value="@webSpace.WebSpaceName">@webSpace.GeoRegion</option>
+                        }
+                    }
+                </select>
+            </p>
+            <p>
+                <button type="submit" class="btn">Create Site</button>
+            </p>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <h2>Current Sites</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Site Name</th>
+                    <th>Region</th>
+                    <th>Host Names</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{foreach (var site in Model.WebSites)
+                {
+                    <tr>
+                        <td>@site.WebSiteName</td>
+                        <td>@site.WebSpace.GeoRegion</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                @{foreach (var hostName in site.DomainNames)
+                                {
+                                    <li>@hostName</li>
+                                }}
+                            </ul>
+                        </td>
+                    </tr>
+                }}
+            </tbody>
+        </table>
+    </div>
+</div>
