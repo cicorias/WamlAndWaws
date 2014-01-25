@@ -66,6 +66,7 @@ namespace WamlAndWaws.Controllers
 
         private static HomePageViewModel GetHomePageViewModel(WebSiteManagementClient client)
         {
+
             var viewModel = new HomePageViewModel();
 
             var webSpaceFunc = new Action<WebSpacesListResponse.WebSpace>((x) =>
@@ -103,7 +104,10 @@ namespace WamlAndWaws.Controllers
             });
 
             return viewModel;
+
+
         }
+
 
         private X509Certificate2 GetCertificate()
         {
@@ -122,14 +126,12 @@ namespace WamlAndWaws.Controllers
         private SubscriptionCloudCredentials GetCredentials()
         {
             var logPath = Server.MapPath("~/App_Data/log.txt");
-            CloudContext.Configuration.Tracing.AddTracingInterceptor(
-                new LogFileTracingInterceptor(logPath)
-                );
 
             var subscriptionId = ConfigurationManager.AppSettings["AZURE-SUBSCRIPTION-ID"];
 
             return new CertificateCloudCredentials(subscriptionId, GetCertificate());
         }
+
     }
 
     public class LogFileTracingInterceptor : Microsoft.WindowsAzure.ICloudTracingInterceptor
